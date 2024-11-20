@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GunungController;
+use App\Http\Controllers\JalurController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +36,5 @@ Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
 
 // Resource route tanpa index
 Route::resource('gunung', GunungController::class)->except(['index']);
+
+Route::resource('jalur', JalurController::class);

@@ -63,6 +63,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Jalur -->
+        <li class="nav-item {{ request()->routeIs('jalur.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('jalur.index') }}">
+                <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
+                <span>{{ __('Jalur') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
             <a class="nav-link" href="{{ route('profile') }}">
