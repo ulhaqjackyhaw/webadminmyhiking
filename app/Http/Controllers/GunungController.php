@@ -7,103 +7,87 @@ use Illuminate\Http\Request;
 
 class GunungController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $gunungs = Gunung::all();
         return view('gunung.index', compact('gunungs'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('gunung.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'province_id' => 'required|size:2',
-            'regency_id' => 'required|size:4',
-            'district_id' => 'required|size:7',
-            'village_id' => 'required|size:10',
+            'province_id' => 'required|integer',
+            'regency_id' => 'required|integer',
+            'district_id' => 'required|integer',
+            'village_id' => 'required|integer',
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
             'ketinggian' => 'required|integer',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $gambarPath = $request->file('gambar')->store('images', 'public');
+        $data = $request->all();
 
-        Gunung::create([
-            'province_id' => $request->province_id,
-            'regency_id' => $request->regency_id,
-            'district_id' => $request->district_id,
-            'village_id' => $request->village_id,
-            'nama' => $request->nama,
-            'deskripsi' => $request->deskripsi,
-            'ketinggian' => $request->ketinggian,
-            'gambar' => $gambarPath,
-        ]);
+        if ($request->hasFile('gambar')) {
+            $data['gambar'] = $request->file('gambar')->store('gunung_images', 'public');
+        }
 
-        return redirect()->route('gunung.index')->with('success', 'Data gunung berhasil ditambahkan.');
+        Gunung::create($data);
+
+        return redirect()->route('gunung.index')->with('success', 'Gunung berhasil ditambahkan!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function show($id)
+    {
+        $gunung = Gunung::findOrFail($id); // Mengambil data gunung berdasarkan ID
+        return view('gunung.show', compact('gunung'));
+    }
+
+
     public function edit(Gunung $gunung)
     {
         return view('gunung.edit', compact('gunung'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Gunung $gunung)
     {
         $request->validate([
-            'province_id' => 'required|size:2',
-            'regency_id' => 'required|size:4',
-            'district_id' => 'required|size:7',
-            'village_id' => 'required|size:10',
+            'province_id' => 'required|integer',
+            'regency_id' => 'required|integer',
+            'district_id' => 'required|integer',
+            'village_id' => 'required|integer',
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
             'ketinggian' => 'required|integer',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        $data = $request->all();
+
         if ($request->hasFile('gambar')) {
-            $gambarPath = $request->file('gambar')->store('images', 'public');
-            $gunung->gambar = $gambarPath;
+            if ($gunung->gambar) {
+                \Storage::disk('public')->delete($gunung->gambar);
+            }
+            $data['gambar'] = $request->file('gambar')->store('gunung_images', 'public');
         }
 
-        $gunung->update($request->only([
-            'province_id',
-            'regency_id',
-            'district_id',
-            'village_id',
-            'nama',
-            'deskripsi',
-            'ketinggian',
-        ]));
+        $gunung->update($data);
 
-        return redirect()->route('gunung')->with('success', 'Data gunung berhasil diupdate.');
+        return redirect()->route('gunung.index')->with('success', 'Gunung berhasil diupdate!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Gunung $gunung)
     {
+        if ($gunung->gambar) {
+            \Storage::disk('public')->delete($gunung->gambar);
+        }
         $gunung->delete();
-        return redirect()->route('gunung')->with('success', 'Data gunung berhasil dihapus.');
+
+        return redirect()->route('gunung.index')->with('success', 'Gunung berhasil dihapus!');
     }
 }

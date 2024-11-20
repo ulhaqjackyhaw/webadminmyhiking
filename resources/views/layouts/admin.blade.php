@@ -58,11 +58,10 @@
         <!-- Nav Item - Gunung -->
         <li class="nav-item {{ request()->routeIs('gunung') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('gunung') }}">
-                <i class="fas fa-mountain"></i> <!-- Gunakan ikon yang sesuai -->
+                <i class="fas fa-mountain"></i>
                 <span>{{ __('Gunung') }}</span>
             </a>
         </li>
-
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">

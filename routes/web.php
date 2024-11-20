@@ -28,5 +28,9 @@ Route::put('/profile', 'ProfileController@update')->name('profile.update');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::resource('gunung', GunungController::class);
+
+// Rute untuk daftar gunung
 Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
+
+// Resource route tanpa index
+Route::resource('gunung', GunungController::class)->except(['index']);
