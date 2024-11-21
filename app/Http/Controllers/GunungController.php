@@ -7,8 +7,21 @@ use Illuminate\Http\Request;
 
 class GunungController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Gunung::query();
+
+    // Cek apakah ada parameter pencarian
+    if ($request->has('search')) {
+        $search = $request->get('search');
+        $query->where(function($q) use ($search) {
+            $q->where('nama', 'like', '%' . $search . '%')
+              ->orWhere('province_id', 'like', '%' . $search . '%')
+              ->orWhere('regency_id', 'like', '%' . $search . '%');
+        });
+    }
+    // Ambil data gunung dengan hasil pencarian jika ada
+    $gunungs = $query->get();
         $gunungs = Gunung::all();
         return view('gunung.index', compact('gunungs'));
     }
@@ -90,4 +103,5 @@ class GunungController extends Controller
 
         return redirect()->route('gunung.index')->with('success', 'Gunung berhasil dihapus!');
     }
+
 }
