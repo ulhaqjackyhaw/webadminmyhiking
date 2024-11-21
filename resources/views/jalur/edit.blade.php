@@ -6,7 +6,7 @@
     <form action="{{ route('jalur.update', $jalur->id) }}" method="POST">
         @csrf
         @method('PUT') <!-- Gunakan metode PUT untuk update -->
-
+<!--  -->
         <div class="form-group">
             <label for="id_gunung">Nama Gunung</label>
             <select id="id_gunung" name="id_gunung" class="form-control @error('id_gunung') is-invalid @enderror">

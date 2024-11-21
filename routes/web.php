@@ -46,3 +46,4 @@ Route::get('/get-villages/{district_id}', [WilayahController::class, 'getVillage
 
 Route::get('/jalur/{id}/edit', [JalurController::class, 'edit'])->name('jalur.edit');
 Route::put('/jalur/{id}', [JalurController::class, 'update'])->name('jalur.update');
+//

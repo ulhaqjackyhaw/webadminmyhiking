@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Tambah Jalur</h1>
     <form action="{{ route('jalur.store') }}" method="POST">
-        <!-- {{csrf_field()}} -->
+   
         @csrf
 
         <div class="form-group">

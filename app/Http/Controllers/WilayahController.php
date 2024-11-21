@@ -26,5 +26,6 @@ class WilayahController extends Controller
         $villages = Village::where('district_id', $district_id)->get();
         return response()->json($villages);
     }
+    //
 }
 ?>

@@ -101,7 +101,9 @@ class JalurController extends Controller
 
         return view('jalur.edit', compact('jalur', 'provinces', 'regencies', 'districts', 'villages', 'pegunungan'));
 
-    }
+    } 
+
+    //
 
     public function update(Request $request, $id)
     {

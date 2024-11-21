@@ -21,6 +21,7 @@
                 <th>Aksi</th>
             </tr>
         </thead>
+        <!--  -->
         <tbody>
             @foreach ($jalur as $j)
             <tr>
