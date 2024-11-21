@@ -37,7 +37,7 @@ Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
 
 // Resource route tanpa index
 Route::resource('gunung', GunungController::class)->except(['index']);
-
+Route::resource('gunung', GunungController::class);
 Route::resource('jalur', JalurController::class);
 
 Route::get('/get-regencies/{province_id}', [WilayahController::class, 'getRegencies']);

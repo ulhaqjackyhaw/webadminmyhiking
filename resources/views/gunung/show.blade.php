@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
     <h1>Detail Gunung</h1>
-    <a href="{{ route('gunung') }}" class="btn btn-secondary mb-3">Kembali ke Daftar</a>
 
     <div class="card">
         <div class="card-header">
