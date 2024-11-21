@@ -8,10 +8,15 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Nama</th>
                 <th>Gunung</th>
                 <th>Provinsi</th>
                 <th>Kabupaten</th>
+                <th>Kecamatan</th>
+                <th>Desa</th>
+                <th>Jarak</th>
                 <th>Deskripsi</th>
+                <th>Map Basecamp</th>
                 <th>Biaya</th>
                 <th>Aksi</th>
             </tr>
@@ -20,10 +25,15 @@
             @foreach ($jalur as $j)
             <tr>
                 <td>{{ $j->id }}</td>
-                <td>{{ $j->gunung->name ?? 'N/A' }}</td>
+                <td>{{ $j->nama }}</td>
+                <td>{{ $j->gunung->nama ?? 'Gak ono'}}</td>
                 <td>{{ $j->province->name ?? 'N/A' }}</td>
                 <td>{{ $j->regency->name ?? 'N/A' }}</td>
+                <td>{{ $j->district->name ?? 'N/A' }}</td>
+                <td>{{ $j->village->name ?? 'N/A' }}</td>
+                <td>{{ $j->jarak }}</td>
                 <td>{{ $j->deskripsi }}</td>
+                <td>{{ $j->map_basecamp }}</td>
                 <td>{{ $j->biaya }}</td>
                 <td>
                     <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-warning btn-sm">Edit</a>

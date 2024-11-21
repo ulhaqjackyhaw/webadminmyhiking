@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GunungController;
 use App\Http\Controllers\JalurController;
+use App\Http\Controllers\WilayahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,7 @@ Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
 Route::resource('gunung', GunungController::class)->except(['index']);
 
 Route::resource('jalur', JalurController::class);
+
+Route::get('/get-regencies/{province_id}', [WilayahController::class, 'getRegencies']);
+Route::get('/get-districts/{regency_id}', [WilayahController::class, 'getDistricts']);
+Route::get('/get-villages/{district_id}', [WilayahController::class, 'getVillages']);
