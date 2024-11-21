@@ -24,7 +24,7 @@
         <tbody>
             @foreach ($jalur as $j)
             <tr>
-                <td>{{ $j->id }}</td>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $j->nama }}</td>
                 <td>{{ $j->gunung->nama ?? 'Gak ono'}}</td>
                 <td>{{ $j->province->name ?? 'N/A' }}</td>
