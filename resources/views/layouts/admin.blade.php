@@ -56,8 +56,8 @@
         </div>
 
         <!-- Nav Item - Gunung -->
-        <li class="nav-item {{ request()->routeIs('gunung') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('gunung') }}">
+        <li class="nav-item {{ request()->routeIs('gunung.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('gunung.index') }}">
                 <i class="fas fa-mountain"></i>
                 <span>{{ __('Gunung') }}</span>
             </a>
