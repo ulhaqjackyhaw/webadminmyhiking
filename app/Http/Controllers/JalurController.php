@@ -65,7 +65,7 @@ class JalurController extends Controller
             'biaya' => $request->biaya,
         ]);
 
-        return redirect('jalur');
+        return redirect('jalur')->with('success', 'Jalur berhasil ditambahkan !');
     }
 
     public function show(Jalur $jalur)
