@@ -15,7 +15,7 @@
                         <!-- Form Pencarian -->
                         <form action="{{ route('gunung.index') }}" method="GET" class="d-flex">
                             <input type="text" name="search" class="form-control" placeholder="Cari gunung..." value="{{ request()->get('search') }}">
-                            <button type="submit" class="btn btn-primary ms-2">Cari</button>
+                            <button type="submit" class="btn btn-primary ms-2" style="background-color: #007bff; border: none;">Cari</button>
                         </form>
                     </div>
                     @if (session('success'))
@@ -24,15 +24,15 @@
                     <table class="table table-bordered">
                         <thead style="background-color: #d4edda;"> <!-- Gaya tabel disamakan -->
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nama gunung</th>
-                                <th scope="col">Provinsi</th>
-                                <th scope="col">Kabupaten</th>
-                                <th scope="col">Ketinggian</th>
-                                <th scope="col">Gambar</th>
-                                <th scope="col" style="width: 20%">Aksi</th>
+                                <th scope="col" class="text-center">ID</th>
+                                <th scope="col" class="text-center">Nama Gunung</th>
+                                <th scope="col" class="text-center">Provinsi</th>
+                                <th scope="col" class="text-center">Kabupaten</th>
+                                <th scope="col" class="text-center">Ketinggian</th>
+                                <th scope="col" class="text-center">Gambar</th>
+                                <th scope="col" class="text-center" style="width: 20%">Aksi</th>
                             </tr>
-                        </thead>
+                        </thead>                        
                         <tbody>
                             @foreach($gunungs as $gunung)
                             <tr>
@@ -51,7 +51,7 @@
                                 <td class="text-center">
                                     <form onsubmit="return confirm('Yakin ingin menghapus?');" action="{{ route('gunung.destroy', $gunung->id) }}" method="POST">
                                         <a href="{{ route('gunung.show', $gunung->id) }}" class="btn btn-sm btn-dark">DETAIL</a>
-                                        <a href="{{ route('gunung.edit', $gunung->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <a href="{{ route('gunung.edit', $gunung->id) }}" class="btn btn-sm" style="background-color: #28a745; color: white; border: none;">EDIT</a>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
