@@ -34,6 +34,7 @@ Route::get('/about', function () {
 
 // Rute untuk daftar gunung
 Route::get('/gunung', [GunungController::class, 'index'])->name('gunung');
+Route::resource('gunung', GunungController::class)->except(['index']);
 
 // Resource route tanpa index
 Route::resource('gunung', GunungController::class)->except(['index']);

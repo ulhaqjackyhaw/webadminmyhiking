@@ -3,12 +3,16 @@
 @section('content')
 <div style="background-color: #117958; padding: 20px;">
     <div class="container bg-white p-4 rounded">
-        <h1 class="text-center mb-4 text-black" style="font-weight: bold;">Daftar Jalur</h1> <!-- Warna teks putih -->
+        <h1 class="text-center mb-4 text-black" style="font-weight: bold;">Daftar Jalur</h1>
         <div class="d-flex justify-content-between align-items-center mb-3">
             <a href="{{ route('jalur.create') }}"
                class="btn"
-               style="background-color: #117958; color: white; border: none;">Tambah Jalur</a> <!-- Warna tombol -->
-            <input id="searchInput" type="text" class="form-control w-25" placeholder="Cari nama jalur...">
+               style="background-color: #117958; color: white; border: none;">Tambah Jalur</a>
+            <!-- Form Pencarian -->
+            <form action="{{ route('jalur.index') }}" method="GET" class="d-flex">
+                <input type="text" name="search" class="form-control" placeholder="Cari jalur..." value="{{ request()->get('search') }}">
+                <button type="submit" class="btn btn-primary ms-2">Cari</button>
+            </form>
         </div>
         <table class="table" id="jalurTable">
             <thead style="background-color: #d4edda;">
@@ -31,7 +35,7 @@
                 @foreach ($jalur as $j)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td class="nama-jalur" style="color: green;">{{ $j->nama }}</td> <!-- Warna teks hijau -->
+                    <td class="nama-jalur" style="color: green;">{{ $j->nama }}</td>
                     <td>{{ $j->gunung->nama ?? 'Gak ono' }}</td>
                     <td>{{ $j->province->name ?? 'N/A' }}</td>
                     <td>{{ $j->regency->name ?? 'N/A' }}</td>
@@ -41,9 +45,12 @@
                     <td>{{ $j->deskripsi }}</td>
                     <td>{{ $j->map_basecamp }}</td>
                     <td>{{ $j->biaya }}</td>
-                    <td>
-                        <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                        <form action="{{ route('jalur.destroy', $j->id) }}" method="POST" style="display:inline-block;">
+                    <td class="d-flex gap-2"> <!-- Menambahkan jarak antara tombol -->
+                        <!-- Change edit button color to blue -->
+                        <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-primary btn-sm me-2">Edit</a>
+
+                        <!-- Change delete button color to red -->
+                        <form action="{{ route('jalur.destroy', $j->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus jalur ini?')">Hapus</button>
@@ -63,11 +70,7 @@
 
         rows.forEach(row => {
             const namaJalur = row.querySelector('.nama-jalur').textContent.toLowerCase();
-            if (namaJalur.includes(query)) {
-                row.style.display = ''; // Tampilkan baris
-            } else {
-                row.style.display = 'none'; // Sembunyikan baris
-            }
+            row.style.display = namaJalur.includes(query) ? '' : 'none';
         });
     });
 </script>

@@ -10,30 +10,33 @@ use App\Models\Regency; // Import model Provinsi
 use App\Models\District; // Import model Provinsi
 use App\Models\Village; // Import model Provinsi
 
-
 class JalurController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $jalur = Jalur::with('gunung')->get();
+        // Ambil input pencarian
+        $search = $request->input('search');
+
+        // Query data jalur dengan filter pencarian (jika ada)
+        $jalur = Jalur::with(['gunung', 'province', 'regency'])
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', '%' . $search . '%');
+            })
+            ->get();
+
+        // Tampilkan ke view
         return view('jalur.index', compact('jalur'));
     }
 
     public function create()
     {
         $pegunungan = Gunung::all();
-        $nama = request()->all();
         $province_id = Province::all(); // Mengambil semua data provinsi
         $regency_id = Regency::all(); // Mengambil semua data provinsi
         $district_id = District::all(); // Mengambil semua data provinsi
         $village_id = Village::all(); // Mengambil semua data provinsi
-        $jarak = request()->all();
-        $deskripsi = request()->all();
-        $map_basecamp = request()->all();
-        $biaya = request()->all();
-        return view('jalur.create', compact('province_id' , 'regency_id' , 'district_id' , 'village_id', 'pegunungan'));
+        return view('jalur.create', compact('province_id', 'regency_id', 'district_id', 'village_id', 'pegunungan'));
     }
-
 
     public function store(Request $request)
     {
@@ -60,26 +63,9 @@ class JalurController extends Controller
             'deskripsi' => $request->deskripsi,
             'map_basecamp' => $request->map_basecamp,
             'biaya' => $request->biaya,
-
         ]);
 
         return redirect('jalur');
-
-        // dd($request->all());
-        // $request->validate([
-        //     'id_gunung' => 'nullable|exists:gunung,id',
-        //     'nama' => 'required|string|max:60',
-        //     'province_id' => 'required|size:2',
-        //     'regency_id' => 'required|size:4',
-        //     'district_id' => 'required|size:7',
-        //     'village_id' => 'required|size:10',
-        //     'deskripsi' => 'required|string',
-        //     'map_basecamp' => 'required|string|max:60',
-        //     'biaya' => 'required|integer',
-        // ]);
-
-        // Jalur::create($request->all());
-        // return redirect()->route('jalur.index')->with('success', 'Jalur berhasil ditambahkan');
     }
 
     public function show(Jalur $jalur)
@@ -89,9 +75,6 @@ class JalurController extends Controller
 
     public function edit($id)
     {
-        // $gunung = Gunung::all();
-        // return view('jalur.edit', compact('jalur', 'gunung'));
-        
         $pegunungan = Gunung::all();
         $jalur = Jalur::findOrFail($id); // Ambil data jalur berdasarkan ID
         $provinces = Province::all(); // Ambil semua data provinsi
@@ -100,10 +83,7 @@ class JalurController extends Controller
         $villages = Village::where('district_id', $jalur->district_id)->get(); // Desa berdasarkan kecamatan
 
         return view('jalur.edit', compact('jalur', 'provinces', 'regencies', 'districts', 'villages', 'pegunungan'));
-
-    } 
-
-    //
+    }
 
     public function update(Request $request, $id)
     {
@@ -122,20 +102,19 @@ class JalurController extends Controller
 
         $updateJalur = Jalur::find($id);
         $updateJalur->update([
-            'nama'           => $request->nama,
+            'nama' => $request->nama,
             'id_gunung' => $request->id_gunung,
-            'province_id'          => $request->province_id,
-            'regency_id'        => $request->regency_id,
-            'disrict_id'     => $request->district_id,
-            'village_id'       => $request->village_id,
+            'province_id' => $request->province_id,
+            'regency_id' => $request->regency_id,
+            'district_id' => $request->district_id, // Fix typo here
+            'village_id' => $request->village_id,
             'jarak' => $request->jarak,
             'deskripsi' => $request->deskripsi,
             'map_basecamp' => $request->map_basecamp,
             'biaya' => $request->biaya,
         ]);
-        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate');
 
-        // dd($request->all());
+        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate');
     }
 
     public function destroy($id)
