@@ -16,7 +16,7 @@
                         <!-- Form Pencarian -->
                         <form action="{{ route('jalur.index') }}" method="GET" class="d-flex">
                             <input type="text" name="search" class="form-control" placeholder="Cari jalur..." value="{{ request()->get('search') }}">
-                            <button type="submit" class="btn btn-primary ms-2">Cari</button>
+                            <button type="submit" class="btn" style="background-color: #007bff; color: white;">Cari</button>
                         </form>
                     </div>
                     @if (session('success'))
@@ -55,7 +55,7 @@
                                 <td>Rp {{ number_format($j->biaya, 0, ',', '.') }}</td>
                                 <td class="text-center">
                                     <form onsubmit="return confirm('Yakin ingin menghapus jalur ini?');" action="{{ route('jalur.destroy', $j->id) }}" method="POST">
-                                        <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                    <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm" style="background-color: #28a745; color: white;">EDIT</a>
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
