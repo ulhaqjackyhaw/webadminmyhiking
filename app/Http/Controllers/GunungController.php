@@ -3,42 +3,75 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gunung;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\Province; // Import model Provinsi
+use App\Models\Regency; // Import model Provinsi
+use App\Models\District; // Import model Provinsi
+use App\Models\Village; // Import model Provinsi
 
 class GunungController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $gunungs = Gunung::all();
+        // Ambil input pencarian
+        $search = $request->input('search');
+
+        // Query data gunung dengan filter pencarian (jika ada)
+        $gunungs = Gunung::with(['province', 'regency'])
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', '%' . $search . '%');
+            })
+            ->get();
+
+        // Tampilkan ke view
         return view('gunung.index', compact('gunungs'));
     }
 
     public function create()
     {
-        return view('gunung.create');
+        // Mengambil data untuk dropdown
+        $province_id = Province::all(); // Semua data provinsi
+        $regency_id = Regency::all();   // Semua data kabupaten
+        $district_id = District::all(); // Semua data kecamatan
+        $village_id = Village::all();   // Semua data desa
+        
+        return view('gunung.create', compact('province_id', 'regency_id', 'district_id', 'village_id'));
     }
 
     public function store(Request $request)
     {
+        // Validasi input form
         $request->validate([
-            'province_id' => 'required|integer',
-            'regency_id' => 'required|integer',
-            'district_id' => 'required|integer',
-            'village_id' => 'required|integer',
             'nama' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'ketinggian' => 'required|integer',
+            'province_id' => 'required|integer|exists:reg_provinces,id',
+            'regency_id' => 'required|integer|exists:reg_regencies,id',
+            'district_id' => 'required|integer|exists:reg_districts,id',
+            'village_id' => 'required|integer|exists:reg_villages,id',
+            'ketinggian' => 'required|numeric|min:0',
+            'deskripsi' => 'nullable|string|max:1000',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data = $request->all();
-
+        // Upload gambar jika ada
+        $imagePath = null;
         if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('gunung_images', 'public');
+            $imagePath = $request->file('gambar')->store('gunung', 'public');
         }
 
-        Gunung::create($data);
+        // Simpan data ke database
+        Gunung::create([
+            'nama' => $request->nama,
+            'province_id' => $request->province_id,
+            'regency_id' => $request->regency_id,
+            'district_id' => $request->district_id,
+            'village_id' => $request->village_id,
+            'ketinggian' => $request->ketinggian,
+            'deskripsi' => $request->deskripsi,
+            'gambar' => $imagePath,
+        ]);
 
+        // Redirect dengan pesan sukses
         return redirect()->route('gunung.index')->with('success', 'Gunung berhasil ditambahkan!');
     }
 
@@ -49,46 +82,85 @@ class GunungController extends Controller
     }
 
 
-    public function edit(Gunung $gunung)
-    {
-        return view('gunung.edit', compact('gunung'));
-    }
+    public function edit($id)
+{
+    // Temukan gunung berdasarkan ID
+    $gunung = Gunung::findOrFail($id);
 
-    public function update(Request $request, Gunung $gunung)
-    {
-        $request->validate([
-            'province_id' => 'required|integer',
-            'regency_id' => 'required|integer',
-            'district_id' => 'required|integer',
-            'village_id' => 'required|integer',
-            'nama' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'ketinggian' => 'required|integer',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    // Ambil data untuk dropdown (Provinsi, Kabupaten, Kecamatan, Desa)
+    $province_id = Province::all();
+    $regency_id = Regency::all();
+    $district_id = District::all();
+    $village_id = Village::all();
 
-        $data = $request->all();
+    // Tampilkan form edit dengan data gunung dan data untuk dropdown
+    return view('gunung.edit', compact('gunung', 'province_id', 'regency_id', 'district_id', 'village_id'));
+}
 
-        if ($request->hasFile('gambar')) {
-            if ($gunung->gambar) {
-                \Storage::disk('public')->delete($gunung->gambar);
-            }
-            $data['gambar'] = $request->file('gambar')->store('gunung_images', 'public');
-        }
 
-        $gunung->update($data);
+public function update(Request $request, $id)
+{
+    // Validasi input form
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'province_id' => 'required|integer|exists:reg_provinces,id',
+        'regency_id' => 'required|integer|exists:reg_regencies,id',
+        'district_id' => 'required|integer|exists:reg_districts,id',
+        'village_id' => 'required|integer|exists:reg_villages,id',
+        'ketinggian' => 'required|numeric|min:0',
+        'deskripsi' => 'nullable|string|max:1000',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        return redirect()->route('gunung.index')->with('success', 'Gunung berhasil diupdate!');
-    }
+    // Temukan gunung berdasarkan ID
+    $gunung = Gunung::findOrFail($id);
 
-    public function destroy(Gunung $gunung)
-    {
+    // Upload gambar jika ada
+    if ($request->hasFile('gambar')) {
+        // Hapus gambar lama jika ada
         if ($gunung->gambar) {
             \Storage::disk('public')->delete($gunung->gambar);
         }
-        $gunung->delete();
 
-        return redirect()->route('gunung.index')->with('success', 'Gunung berhasil dihapus!');
+        // Upload gambar baru
+        $imagePath = $request->file('gambar')->store('gunung', 'public');
+    } else {
+        // Jika tidak ada gambar yang diupload, gunakan gambar lama
+        $imagePath = $gunung->gambar;
     }
+
+    // Update data gunung
+    $gunung->update([
+        'nama' => $request->nama,
+        'province_id' => $request->province_id,
+        'regency_id' => $request->regency_id,
+        'district_id' => $request->district_id,
+        'village_id' => $request->village_id,
+        'ketinggian' => $request->ketinggian,
+        'deskripsi' => $request->deskripsi,
+        'gambar' => $imagePath,
+    ]);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('gunung.index')->with('success', 'Gunung berhasil diperbarui!');
+}
+
+    public function destroy($id)
+{
+    // Temukan gunung berdasarkan ID
+    $gunung = Gunung::findOrFail($id);
+
+    // Hapus gambar jika ada
+    if ($gunung->gambar) {
+        \Storage::disk('public')->delete($gunung->gambar);
+    }
+
+    // Hapus data gunung
+    $gunung->delete();
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('gunung.index')->with('success', 'Gunung berhasil dihapus!');
+}
+
 
 }

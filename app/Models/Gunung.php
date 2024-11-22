@@ -16,8 +16,8 @@ class Gunung extends Model
         'regency_id',
         'district_id',
         'village_id',
-        'deskripsi',
         'ketinggian',
+        'deskripsi',
         'gambar',
     ];
 

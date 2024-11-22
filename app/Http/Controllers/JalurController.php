@@ -65,7 +65,7 @@ class JalurController extends Controller
             'biaya' => $request->biaya,
         ]);
 
-        return redirect('jalur')->with('success', 'Jalur berhasil ditambahkan !');
+        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil ditambahkan!');
     }
 
     public function show(Jalur $jalur)
@@ -114,13 +114,13 @@ class JalurController extends Controller
             'biaya' => $request->biaya,
         ]);
 
-        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate');
+        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate!');
     }
 
     public function destroy($id)
     {
         $jalur = Jalur::findOrFail($id);
         $jalur->delete();
-        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil dihapus');
+        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil dihapus!');
     }
 }
