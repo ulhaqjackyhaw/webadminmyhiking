@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="background-color: #117958; padding: 20px;">
+<div style="background-color: green; padding: 20px;">
     <div class="container bg-white p-4 rounded">
         <h1 class="text-center mb-4 text-black" style="font-weight: bold;">Daftar Jalur</h1>
         <div class="d-flex justify-content-between align-items-center mb-3">
