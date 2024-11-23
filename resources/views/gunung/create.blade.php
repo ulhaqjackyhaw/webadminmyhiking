@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
 </head>
 <body style="background: #117958">
     <div class="container bg-white p-4 rounded">
@@ -26,7 +26,7 @@
                         <!-- Dropdown Provinsi -->
                         <div class="form-group mb-3">
                             <label for="province_id" class="font-weight-bold">Provinsi</label>
-                            <select id="province_id" name="province_id" class="form-control @error('province_id') is-invalid @enderror">
+                            <select id="province_id" name="province_id" class="select2 form-control @error('province_id') is-invalid @enderror">
                                 <option value="" disabled selected>Pilih Provinsi</option>
                                 @foreach($province_id as $province)
                                     <option value="{{ $province->id }}">{{ $province->name }}</option>
@@ -133,8 +133,10 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function() {
+ 
         // Ketika provinsi dipilih
         $('#province_id').change(function() {
             let provinceId = $(this).val();

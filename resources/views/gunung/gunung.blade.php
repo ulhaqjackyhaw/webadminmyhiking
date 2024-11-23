@@ -40,6 +40,8 @@
                                 <th>Nama Gunung</th>
                                 <th>Provinsi</th>
                                 <th>Kabupaten</th>
+                                <th>Kecamatan</th>
+                                <th>Desa</th>
                                 <th>Ketinggian</th>
                                 <th>Gambar</th>
                                 <th>Aksi</th>
@@ -52,6 +54,8 @@
                                     <td>{{ $gunung->nama }}</td>
                                     <td>{{ $gunung->province_id }}</td>
                                     <td>{{ $gunung->regency_id }}</td>
+                                    <td>{{ $gunung->district_id }}</td>
+                                    <td>{{ $gunung->village_id }}</td>
                                     <td>{{ $gunung->ketinggian }} mdpl</td>
                                     <td>
                                         <img src="{{ asset('storage/' . $gunung->gambar) }}" alt="{{ $gunung->nama }}" width="80">

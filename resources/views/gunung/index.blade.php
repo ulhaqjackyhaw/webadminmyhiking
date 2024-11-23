@@ -28,6 +28,8 @@
                                 <th scope="col" class="text-center">Nama Gunung</th>
                                 <th scope="col" class="text-center">Provinsi</th>
                                 <th scope="col" class="text-center">Kabupaten</th>
+                                <th scope="col" class="text-center">Kecamatan</th>
+                                <th scope="col" class="text-center">Desa</th>
                                 <th scope="col" class="text-center">Ketinggian</th>
                                 <th scope="col" class="text-center">Gambar</th>
                                 <th scope="col" class="text-center" style="width: 20%">Aksi</th>
@@ -40,7 +42,9 @@
                                 <td style=>{{ $gunung->nama }}</td> <!-- Warna teks hijau disamakan -->
                                 <td>{{ $gunung->province->name ?? 'Tidak Diketahui' }}</td> <!-- Menampilkan Nama Provinsi -->
                                 <td>{{ $gunung->regency->name ?? 'Tidak Diketahui' }}</td> <!-- Menampilkan Nama Kabupaten -->
-                                <td>{{ $gunung->ketinggian }} mdpl</td>
+                                <td>{{ $gunung->district->name ?? 'Tidak Diketahui' }}</td> <!-- Menampilkan Nama Kecamatan -->
+                                <td>{{ $gunung->village->name ?? 'Tidak Diketahui' }}</td> <!-- Menampilkan Nama Desa -->
+                                <td>{{ $gunung->ketinggian ?? 'Tidak Diketahui' }} mdpl</td>
                                 <td class="text-center">
                                     @if ($gunung->gambar)
                                     <img src="{{ asset('storage/' . $gunung->gambar) }}" class="rounded" style="width: 150px">

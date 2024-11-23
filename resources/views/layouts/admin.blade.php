@@ -20,7 +20,9 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
+    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">   
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 <body id="page-top">
 
@@ -30,11 +32,17 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/home') }}"
+        style="text-transform:none !important">
+            {{-- <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
-            </div>
-            <div class="sidebar-brand-text mx-3">MyHiking <sup>2</sup></div>
+            </div> --}}
+            <img src="{{ asset("img/logo.png") }}" alt="" style="
+            height: 55px;
+            background-color: white;
+            border-radius: 50%;
+            width: 58px; ">
+            <div class="sidebar-brand-text mx-3" style="font-family: 'Poppins', sans-serif;"> MyHiking </div>
         </a>
 
         <!-- Divider -->

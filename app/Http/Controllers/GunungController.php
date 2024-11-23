@@ -18,13 +18,15 @@ class GunungController extends Controller
         $search = $request->input('search');
 
         // Query data gunung dengan filter pencarian (jika ada)
-        $gunungs = Gunung::with(['province', 'regency'])
+        $gunungs = Gunung::with(['province', 'regency', 'district', 'village'])
             ->when($search, function ($query, $search) {
-                return $query->where('nama', 'like', '%' . $search . '%');
+                return $query->where('nama', 'like', '%' . $search . '%')                    
+                    ->orWhere('ketinggian', 'like', '%' . $search . '%');                    
             })
             ->get();
 
         // Tampilkan ke view
+        // dd($gunungs);
         return view('gunung.index', compact('gunungs'));
     }
 

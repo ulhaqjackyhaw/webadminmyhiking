@@ -17,9 +17,7 @@ use App\Http\Controllers\WilayahController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index' );
 
 Auth::routes();
 
