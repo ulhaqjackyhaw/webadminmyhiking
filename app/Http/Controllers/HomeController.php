@@ -2,35 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Transaksi;
+use App\Models\Gunung;
+use App\Models\Jalur;
+use App\Models\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        $users = User::count();
+        $totalTransaksi = Transaksi::count(); // Hitung semua transaksi
+        $totalGunung = Gunung::count(); // Hitung jumlah gunung
+        $totalJalur = Jalur::count(); // Hitung jumlah jalur
+        $totalUser = User::count(); // Hitung jumlah user
 
-        $widget = [
-            'users' => $users,
-            //...
-        ];
-
-        return view('home', compact('widget'));
+        return view('home', compact('totalTransaksi', 'totalGunung', 'totalJalur', 'totalUser'));
     }
 }

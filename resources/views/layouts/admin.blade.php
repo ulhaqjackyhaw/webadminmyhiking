@@ -10,7 +10,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Myhiking</title>
 
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
@@ -76,6 +76,14 @@
             <a class="nav-link" href="{{ route('jalur.index') }}">
                 <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
                 <span>{{ __('Jalur') }}</span>
+            </a>
+        </li>
+
+        <!-- Nav Item - Transaksi -->
+        <li class="nav-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('transaksi.index') }}">
+                <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
+                <span>{{ __('Transaksi') }}</span>
             </a>
         </li>
 

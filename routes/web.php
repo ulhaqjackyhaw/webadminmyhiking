@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GunungController;
 use App\Http\Controllers\JalurController;
 use App\Http\Controllers\WilayahController;
+use App\Http\Controllers\TransaksiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +51,21 @@ Route::delete('/gunung/{id}', [GunungController::class, 'destroy'])->name('gunun
 
 Route::get('gunung/{id}/edit', [GunungController::class, 'edit'])->name('gunung.edit');
 Route::post('gunung/{id}', [GunungController::class, 'update'])->name('gunung.update');
+
+// Route untuk transaksi
+Route::middleware(['auth'])->group(function () {
+    // Menampilkan daftar transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+
+    // Menampilkan rincian transaksi tertentu
+    Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])->name('transaksi.show');
+
+    // Verifikasi transaksi
+    Route::post('/transaksi/{id}/verify', [TransaksiController::class, 'verify'])->name('transaksi.verify');
+
+    // Batalkan verifikasi transaksi
+    Route::post('/transaksi/{id}/unverify', [TransaksiController::class, 'unverify'])->name('transaksi.unverify');
+});
+
+
+
