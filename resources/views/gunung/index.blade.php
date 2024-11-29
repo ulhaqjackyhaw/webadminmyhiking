@@ -1,5 +1,6 @@
 @extends('layouts.app')
-@section('content')
+@extends('layouts.admin')
+@section('main-content')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,7 @@
                                 <th scope="col" class="text-center">Gambar</th>
                                 <th scope="col" class="text-center" style="width: 20%">Aksi</th>
                             </tr>
-                        </thead>                        
+                        </thead>
                         <tbody>
                             @foreach($gunungs as $gunung)
                             <tr>

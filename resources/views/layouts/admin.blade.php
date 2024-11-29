@@ -20,7 +20,7 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
-    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">   
+    <link href="{{ asset('img/favicon.png') }}" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
@@ -54,6 +54,28 @@
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>{{ __('Dashboard') }}</span></a>
         </li>
+        <li class="nav-item {{ request()->is('gunung*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('gunung.index') }}">
+        <i class="fas fa-mountain"></i>
+        <span>{{ __('Gunung') }}</span>
+    </a>
+</li>
+<!-- Jalur -->
+<li class="nav-item {{ request()->is('jalur*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('jalur.index') }}">
+        <i class="fas fa-route"></i>
+        <span>{{ __('Jalur') }}</span>
+    </a>
+</li>
+
+<!-- Transaksi -->
+<li class="nav-item {{ request()->is('transaksi*') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('transaksi.index') }}">
+        <i class="fas fa-exchange-alt"></i>
+        <span>{{ __('Transaksi') }}</span>
+    </a>
+</li>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider">
@@ -63,29 +85,29 @@
             {{ __('Settings') }}
         </div>
 
-        <!-- Nav Item - Gunung -->
+        <!-- Nav Item - Gunung
         <li class="nav-item {{ request()->routeIs('gunung.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('gunung.index') }}">
                 <i class="fas fa-mountain"></i>
                 <span>{{ __('Gunung') }}</span>
             </a>
-        </li>
+        </li> -->
 
-        <!-- Nav Item - Jalur -->
+        <!-- Nav Item - Jalur
         <li class="nav-item {{ request()->routeIs('jalur.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('jalur.index') }}">
-                <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
+                <i class="fas fa-route"></i>
                 <span>{{ __('Jalur') }}</span>
             </a>
-        </li>
+        </li> -->
 
-        <!-- Nav Item - Transaksi -->
+        <!-- Nav Item - Transaksi
         <li class="nav-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
-                <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
+                <i class="fas fa-route"></i>
                 <span>{{ __('Transaksi') }}</span>
             </a>
-        </li>
+        </li> -->
 
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">

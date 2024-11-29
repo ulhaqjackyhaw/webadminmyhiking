@@ -1,6 +1,6 @@
 @extends('layouts.app')
-
-@section('content')
+@extends('layouts.admin')
+@section('main-content')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,7 +49,7 @@
                     <td class="text-center">
                         <!-- Tombol Detail -->
                         <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-dark">LIHAT DETAIL</a>
-                        
+
                         <!-- Tombol Verifikasi -->
                         @if ($transaksi->status_pesanan === 'unverified') <!-- Menampilkan tombol verifikasi jika status 'unverified' -->
                             <form action="{{ route('transaksi.verify', $transaksi->id) }}" method="POST" class="d-inline">
