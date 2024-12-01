@@ -82,7 +82,8 @@
         <!-- Nav Item - Transaksi -->
         <li class="nav-item {{ request()->routeIs('transaksi.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('transaksi.index') }}">
-                <i class="fas fa-route"></i> <!-- Pastikan ikon sesuai -->
+            <i class="fas fa-money-bill-wave"></i>
+            <!-- Pastikan ikon sesuai -->
                 <span>{{ __('Transaksi') }}</span>
             </a>
         </li>
