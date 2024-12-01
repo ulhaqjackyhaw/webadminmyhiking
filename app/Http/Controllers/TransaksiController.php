@@ -8,31 +8,30 @@ use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Menampilkan semua transaksi
-     */
-    public function index()
-    {
-        $transaksis = Transaksi::all(); // Mengambil semua transaksi
-        return view('transaksi.index', compact('transaksis'));
-    }
+    public function index(Request $request)
+{
+    // Ambil keyword dari parameter 'search'
+    $search = $request->get('search');
 
-    /**
-     * Menampilkan rincian transaksi berdasarkan ID
-     */
+    // Query untuk filter berdasarkan pencarian
+    $transaksis = Transaksi::query()
+        ->when($search, function ($query, $search) {
+            return $query->where('id_pesanan', 'LIKE', "%{$search}%")
+                         ->orWhere('metode_pembayaran', 'LIKE', "%{$search}%")
+                         ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
+        })
+        ->get(); // Ambil semua data setelah filter
+
+    // Kirim data ke view
+    return view('transaksi.index', compact('transaksis'));
+}
+
     public function show($id)
     {
         $transaksi = Transaksi::findOrFail($id);
         return view('transaksi.show', compact('transaksi'));
     }
-
-    /**
-     * Verifikasi transaksi
-     */
-    // Controller (TransaksiController.php)
-
-    // Controller untuk memverifikasi transaksi
-        public function verify($id)
+     public function verify($id)
         {
             $transaksi = Transaksi::findOrFail($id);
             

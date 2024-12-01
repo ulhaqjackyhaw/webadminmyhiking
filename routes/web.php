@@ -6,6 +6,7 @@ use App\Http\Controllers\GunungController;
 use App\Http\Controllers\JalurController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -54,18 +55,13 @@ Route::post('gunung/{id}', [GunungController::class, 'update'])->name('gunung.up
 
 // Route untuk transaksi
 Route::middleware(['auth'])->group(function () {
-    // Menampilkan daftar transaksi
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
-
-    // Menampilkan rincian transaksi tertentu
     Route::get('/transaksi/{id}', [TransaksiController::class, 'show'])->name('transaksi.show');
-
-    // Verifikasi transaksi
     Route::post('/transaksi/{id}/verify', [TransaksiController::class, 'verify'])->name('transaksi.verify');
-
-    // Batalkan verifikasi transaksi
     Route::post('/transaksi/{id}/unverify', [TransaksiController::class, 'unverify'])->name('transaksi.unverify');
 });
 
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 
 

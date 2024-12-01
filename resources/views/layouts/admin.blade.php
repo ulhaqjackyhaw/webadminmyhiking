@@ -88,6 +88,15 @@
             </a>
         </li>
 
+        <!-- Nav Item - User -->
+        <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('users.index') }}">
+            <i class="fas fa-user-friends"></i>
+            <!-- Pastikan ikon sesuai -->
+                <span>{{ __('User') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - Profile -->
         <li class="nav-item {{ Nav::isRoute('profile') }}">
             <a class="nav-link" href="{{ route('profile') }}">
