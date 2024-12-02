@@ -3,26 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaksi;
-use App\Models\Pesanan; // Pastikan model Pesanan sudah ada
+use App\Models\Pesanan; 
 use Illuminate\Http\Request;
 
 class TransaksiController extends Controller
 {
     public function index(Request $request)
 {
-    // Ambil keyword dari parameter 'search'
     $search = $request->get('search');
-
-    // Query untuk filter berdasarkan pencarian
     $transaksis = Transaksi::query()
         ->when($search, function ($query, $search) {
             return $query->where('id_pesanan', 'LIKE', "%{$search}%")
                          ->orWhere('metode_pembayaran', 'LIKE', "%{$search}%")
                          ->orWhere('status_pesanan', 'LIKE', "%{$search}%");
         })
-        ->get(); // Ambil semua data setelah filter
-
-    // Kirim data ke view
+        ->get(); 
     return view('transaksi.index', compact('transaksis'));
 }
 
