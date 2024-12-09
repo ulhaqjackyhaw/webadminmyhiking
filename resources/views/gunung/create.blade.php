@@ -8,6 +8,7 @@
 </head>
 <body style="background: #117958">
     <div class="container bg-white p-4 rounded">
+        
                     <h1 class="text-start my-4" style="font-weight: bold; color: black;">Tambah Gunung</h1>
                     <form action="{{ route('gunung.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf

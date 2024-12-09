@@ -12,6 +12,9 @@ class Pesanan extends Model
     // Nama tabel yang terkait
     protected $table = 'pesanan';
 
+    // Primary key dari tabel
+    protected $primaryKey = 'id';
+
     // Kolom yang dapat diisi (mass assignable)
     protected $fillable = [
         'id_gunung',
@@ -20,42 +23,54 @@ class Pesanan extends Model
         'tanggal_naik',
         'tanggal_turun',
         'total_harga_tiket',
-        'status',
+        'status', // Pastikan kolom ini sudah ada di database dan isinya benar
     ];
 
-    // Jika tabel menggunakan auto increment untuk primary key
-    protected $primaryKey = 'id';
+    // Nonaktifkan timestamps jika tidak digunakan
+    public $timestamps = true; // Jika tabel menggunakan created_at dan updated_at
 
-    // Jika tabel tidak menggunakan timestamps, nonaktifkan
-    public $timestamps = true;
-
-    // Tipe data kolom tanggal
+    // Casting tipe data untuk kolom tertentu
     protected $casts = [
         'tanggal_naik' => 'datetime',
         'tanggal_turun' => 'datetime',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
     ];
 
     /**
-     * Relasi ke model lain
+     * Relasi ke model Gunung
      */
-
-    // Relasi ke model Gunung (Contoh jika ada)
     public function gunung()
     {
         return $this->belongsTo(Gunung::class, 'id_gunung', 'id');
     }
 
-    // Relasi ke model Jalur (Contoh jika ada)
+    /**
+     * Relasi ke model Jalur
+     */
     public function jalur()
     {
         return $this->belongsTo(Jalur::class, 'id_jalur', 'id');
     }
 
-    // Relasi ke model AnggotaPesanan (Contoh jika ada)
+    /**
+     * Relasi ke model AnggotaPesanan
+     */
     public function anggotaPesanan()
     {
         return $this->belongsTo(AnggotaPesanan::class, 'id_anggota_pesanan', 'id');
+    }
+
+    /**
+     * Mendapatkan status pesanan dengan label yang lebih mudah dimengerti
+     */
+    public function getStatusLabelAttribute()
+    {
+        switch ($this->status) {
+            case 'booking':
+                return 'Booking';
+            case 'mendaki':
+                return 'Mendaki';
+            case 'selesai':
+                return 'Selesai';
+        }
     }
 }

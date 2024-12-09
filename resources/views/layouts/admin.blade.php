@@ -58,10 +58,6 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <!-- <div class="sidebar-heading">
-            {{ __('Settings') }}
-        </div> -->
 
         <!-- Nav Item - Gunung -->
         <li class="nav-item {{ request()->routeIs('gunung.index') ? 'active' : '' }}">
@@ -88,6 +84,14 @@
             </a>
         </li>
 
+        <!-- Nav Item - Riwayat -->
+        <li class="nav-item {{ request()->routeIs('riwayat.index') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('riwayat.index') }}">
+            <i class="fas fa-folder-open"></i>
+                <span>{{ __('Riwayat') }}</span>
+            </a>
+        </li>
+
         <!-- Nav Item - User -->
         <li class="nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('users.index') }}">
@@ -105,13 +109,6 @@
             </a>
         </li>
 
-        <!-- Nav Item - About
-        <li class="nav-item {{ Nav::isRoute('about') }}">
-            <a class="nav-link" href="{{ route('about') }}">
-                <i class="fas fa-fw fa-hands-helping"></i>
-                <span>{{ __('About') }}</span>
-            </a>
-        </li> -->
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -222,7 +219,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Maintained by <a href="https://github.com/aleckrh" target="_blank">AleckRH</a>. {{ now()->year }}</span>
+                    <span>Maintained by <a href="https://github.com/aleckrh" target="_blank">MyHiking</a>. {{ now()->year }}</span>
                 </div>
             </div>
         </footer>

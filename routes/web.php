@@ -7,6 +7,8 @@ use App\Http\Controllers\JalurController;
 use App\Http\Controllers\WilayahController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RiwayatController;
+// use App\Http\Controllers\CheckController;
 
 
 /*
@@ -63,5 +65,19 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/users', [UserController::class, 'index'])->name('users.index');
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+// Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+    Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
+    Route::put('/riwayat/{id}/update-status', [RiwayatController::class, 'updateStatus'])->name('riwayat.updateStatus');
+});
+
+
+// Route::get('/check/scan', [CheckController::class, 'showScanner'])->name('check.scan');
+
+// Proses perubahan status berdasarkan hasil scan
+// Route::post('/check/update-status', [CheckController::class, 'updateStatus'])->name('check.updateStatus');;
+
 
 
