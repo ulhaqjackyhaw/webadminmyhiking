@@ -11,6 +11,9 @@
     <div class="container bg-white p-4 rounded">
         <h1 class="text-center my-4" style="font-weight: bold; color: black;">Riwayat Pesanan</h1>
         
+        <!-- Scanner -->
+        <div id="reader" style="width: 100%; max-width: 600px; margin: auto;"></div>
+
         <!-- Tombol tambah dan pencarian -->
         <div class="d-flex justify-content-end mb-3">
     <form action="{{ route('riwayat.index') }}" method="GET" class="d-flex">
@@ -62,5 +65,52 @@
             </tbody>
         </table>
     </div>
+
+    
+
 </body>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+
+    // // Membuat scanner
+    // const html5QrcodeScanner = new Html5QrcodeScanner(
+    //     "reader", // ID elemen
+    //     { fps: 10, qrbox: { width: 250, height: 250 } }, // Konfigurasi scanner
+    //     false // Tidak verbose
+    // );
+
+    function onScanSuccess(decodedText, decodedResult) {
+        // handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+
+        
+
+        // Set nilai hasil scan ke input pencarian
+        document.querySelector('input[name="search"]').value = decodedText;
+
+        // Otomatis submit form pencarian
+        document.querySelector('form[action="{{ route('riwayat.index') }}"]').submit();
+
+        // // Berhenti scanning
+        // html5QrcodeScanner.clear().then(() => {
+        //     console.log("Scanner stopped.");
+        // }).catch(err => {
+        //     console.error("Error stopping scanner: ", err);
+        // });
+
+        }
+
+        function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+        console.warn(`Code scan error = ${error}`);
+        }
+
+        let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+</script> -->
 @endsection

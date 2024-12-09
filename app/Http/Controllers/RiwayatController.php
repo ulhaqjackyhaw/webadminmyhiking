@@ -9,12 +9,17 @@ use Illuminate\Http\Request;
 class RiwayatController extends Controller
 {
     // Menampilkan daftar riwayat pesanan
-    public function index()
+    public function index(Request $request)
 {
-    // Ambil data pesanan beserta user terkait melalui anggotaPesanan
-    $riwayatPesanan = Pesanan::select('id', 'tanggal_naik', 'tanggal_turun', 'status')
-        ->with('anggotaPesanan:id_users') // Ambil relasi anggota pesanan dan hanya id_users
-        ->get();
+    $query = Pesanan::select('id', 'tanggal_naik', 'tanggal_turun', 'status')
+        ->with('anggotaPesanan:id_users');
+
+    // Filter berdasarkan ID jika ada parameter search
+    if ($request->has('search')) {
+        $query->where('id', $request->input('search'));
+    }
+
+    $riwayatPesanan = $query->get();
 
     return view('riwayat.index', compact('riwayatPesanan'));
 }
@@ -38,6 +43,10 @@ class RiwayatController extends Controller
     $pesanan->save();
 
     return redirect()->route('riwayat.show', $id)->with('success', 'Status pesanan berhasil diperbarui!');
+}
+    public function scan()
+{
+    return view('index');
 }
 
 }
