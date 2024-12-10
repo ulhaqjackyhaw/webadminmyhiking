@@ -65,11 +65,11 @@ class Pesanan extends Model
     public function getStatusLabelAttribute()
     {
         switch ($this->status) {
-            case 'booking':
+            case 'Booking':
                 return 'Booking';
-            case 'mendaki':
-                return 'Mendaki';
-            case 'selesai':
+            case 'Sedang Mendaki':
+                return 'Sedang Mendaki';
+            case 'Selesai':
                 return 'Selesai';
         }
     }

@@ -26,14 +26,10 @@ class RiwayatController extends Controller
 
     // Menampilkan detail pesanan dan anggota pesanan
     public function show($id)
-{
-    // Ambil pesanan berdasarkan ID dengan relasi anggotaPesanan
-    $pesanan = Pesanan::with('anggotaPesanan')->findOrFail($id);
-
-    // Kirim data pesanan ke view
-    return view('riwayat.show', compact('pesanan'));
-}
-
+    {
+        $pesanan = Pesanan::with('anggotaPesanan')->findOrFail($id);
+        return view('riwayat.show', compact('pesanan'));
+    }    
 
     // Mengupdate status pesanan
     public function updateStatus(Request $request, $id)
@@ -44,9 +40,39 @@ class RiwayatController extends Controller
 
     return redirect()->route('riwayat.show', $id)->with('success', 'Status pesanan berhasil diperbarui!');
 }
-    public function scan()
+
+public function scan(Request $request)
 {
-    return view('index');
+    \Log::info('Scan request received', $request->all());
+
+    $id = $request->input('id');
+    $pesanan = Pesanan::find($id);
+
+    if (!$pesanan) {
+        \Log::error("Pesanan dengan ID {$id} tidak ditemukan");
+        return response()->json(['success' => false, 'message' => 'Pesanan tidak ditemukan']);
+    }
+
+    \Log::info("Pesanan ditemukan dengan status {$pesanan->status}");
+
+    switch ($pesanan->status) {
+        case 'Booking':
+            $pesanan->status = 'Sedang Mendaki';
+            break;
+        case 'Sedang Mendaki':
+            $pesanan->status = 'Selesai';
+            break;
+        default:
+            \Log::warning("Status {$pesanan->status} tidak dikenali");
+            return response()->json(['success' => false, 'message' => 'Status tidak dapat diperbarui lebih lanjut']);
+    }
+
+    $pesanan->save();
+    \Log::info("Status pesanan berhasil diperbarui menjadi {$pesanan->status}");
+
+    return response()->json(['success' => true]);
 }
 
+
 }
+

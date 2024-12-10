@@ -74,10 +74,10 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// Route::get('/check/scan', [CheckController::class, 'showScanner'])->name('check.scan');
-
-// Proses perubahan status berdasarkan hasil scan
-// Route::post('/check/update-status', [CheckController::class, 'updateStatus'])->name('check.updateStatus');;
+Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+Route::get('/riwayat/{id}', [RiwayatController::class, 'show'])->name('riwayat.show');
+Route::post('/riwayat/scan', [RiwayatController::class, 'scan'])->name('riwayat.scan');
+Route::post('/riwayat/{id}/update-status', [RiwayatController::class, 'updateStatus'])->name('riwayat.updateStatus');
 
 
 

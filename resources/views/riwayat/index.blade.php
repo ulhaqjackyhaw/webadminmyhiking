@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script> -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body style="background: #117958;">
     <div class="container bg-white p-4 rounded">
@@ -73,44 +73,24 @@
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
 
-    // // Membuat scanner
-    // const html5QrcodeScanner = new Html5QrcodeScanner(
-    //     "reader", // ID elemen
-    //     { fps: 10, qrbox: { width: 250, height: 250 } }, // Konfigurasi scanner
-    //     false // Tidak verbose
-    // );
+function onScanSuccess(decodedText, decodedResult) {
+    console.log(`Code matched = ${decodedText}`, decodedResult);
 
-    function onScanSuccess(decodedText, decodedResult) {
-        // handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult);
+    // Redirect ke halaman detail dengan ID yang di-scan
+    window.location.href = `/riwayat/${decodedText}`;
+}
 
-        
+function onScanFailure(error) {
+    console.warn(`Code scan error = ${error}`);
+}
 
-        // Set nilai hasil scan ke input pencarian
-        document.querySelector('input[name="search"]').value = decodedText;
+let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    false
+);
+html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
-        // Otomatis submit form pencarian
-        document.querySelector('form[action="{{ route('riwayat.index') }}"]').submit();
 
-        // // Berhenti scanning
-        // html5QrcodeScanner.clear().then(() => {
-        //     console.log("Scanner stopped.");
-        // }).catch(err => {
-        //     console.error("Error stopping scanner: ", err);
-        // });
-
-        }
-
-        function onScanFailure(error) {
-        // handle scan failure, usually better to ignore and keep scanning.
-        // for example:
-        console.warn(`Code scan error = ${error}`);
-        }
-
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader",
-        { fps: 10, qrbox: {width: 250, height: 250} },
-        /* verbose= */ false);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 </script> -->
 @endsection
