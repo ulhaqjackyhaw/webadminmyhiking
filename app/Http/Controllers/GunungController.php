@@ -122,11 +122,10 @@ public function update(Request $request, $id)
         if ($gunung->gambar_gunung) {
             \Storage::disk('public')->delete($gunung->gambar_gunung);
         }
-
+    
         // Upload gambar baru
         $gambarPath = $request->file('gambar_gunung')->store('gunung', 'public');
     } else {
-        // Jika tidak ada gambar yang diupload, gunakan gambar lama
         $gambarPath = $gunung->gambar_gunung;
     }
 
