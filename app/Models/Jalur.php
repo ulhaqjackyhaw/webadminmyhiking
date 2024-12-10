@@ -21,7 +21,8 @@ class Jalur extends Model
         'jarak',
         'deskripsi',
         'map_basecamp',
-        'biaya'
+        'biaya',
+        'gambar_jalur'
     ];
 
     // Relasi dengan model Gunung

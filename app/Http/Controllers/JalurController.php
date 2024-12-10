@@ -49,21 +49,41 @@ class JalurController extends Controller
             'jarak' => 'required|numeric|min:0',
             'deskripsi' => 'nullable|string|max:1000',
             'map_basecamp' => 'nullable|string|max:255',
+            'gambar_jalur' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'biaya' => 'required|numeric|min:0',
         ]);
 
-        Jalur::create([
-            'nama' => $request->nama,
-            'id_gunung' => $request->id_gunung,
-            'province_id' => $request->province_id,
-            'regency_id' => $request->regency_id,
-            'district_id' => $request->district_id,
-            'village_id' => $request->village_id,
-            'jarak' => $request->jarak,
-            'deskripsi' => $request->deskripsi,
-            'map_basecamp' => $request->map_basecamp,
-            'biaya' => $request->biaya,
-        ]);
+        // $path = null;
+        if ($request->hasFile('gambar_jalur')) {
+            $gambarPath = $request->file('gambar_jalur')->store('jalur', 'public');
+            Jalur::create([
+                'nama' => $request->nama,
+                'id_gunung' => $request->id_gunung,
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
+                'jarak' => $request->jarak,
+                'deskripsi' => $request->deskripsi,
+                'map_basecamp' => $request->map_basecamp,
+                'gambar_jalur' => $gambarPath,
+                'biaya' => $request->biaya,
+            ]);
+        } else {
+            Jalur::create([
+                'nama' => $request->nama,
+                'id_gunung' => $request->id_gunung,
+                'province_id' => $request->province_id,
+                'regency_id' => $request->regency_id,
+                'district_id' => $request->district_id,
+                'village_id' => $request->village_id,
+                'jarak' => $request->jarak,
+                'deskripsi' => $request->deskripsi,
+                'map_basecamp' => $request->map_basecamp,
+                'biaya' => $request->biaya,
+            ]);
+        }
+        
 
         return redirect()->route('jalur.index')->with('success', 'Jalur berhasil ditambahkan!');
     }
@@ -87,34 +107,40 @@ class JalurController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi data input
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
-            'province_id' => 'required|integer|exists:reg_provinces,id',
-            'regency_id' => 'required|integer|exists:reg_regencies,id',
-            'district_id' => 'required|integer|exists:reg_districts,id',
-            'village_id' => 'required|integer|exists:reg_villages,id',
-            'jarak' => 'required|numeric|min:0',
-            'deskripsi' => 'nullable|string',
-            'map_basecamp' => 'nullable|string|max:255',
-            'biaya' => 'required|integer|min:0',
-        ]);
+    // Validasi data input
+    $validatedData = $request->validate([
+        'nama' => 'required|string|max:255',
+        'province_id' => 'required|integer|exists:reg_provinces,id',
+        'regency_id' => 'required|integer|exists:reg_regencies,id',
+        'district_id' => 'required|integer|exists:reg_districts,id',
+        'village_id' => 'required|integer|exists:reg_villages,id',
+        'jarak' => 'required|numeric|min:0',
+        'deskripsi' => 'nullable|string',
+        'map_basecamp' => 'nullable|string|max:255',
+        'gambar_jalur' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'biaya' => 'required|integer|min:0',
+    ]);
 
-        $updateJalur = Jalur::find($id);
-        $updateJalur->update([
-            'nama' => $request->nama,
-            'id_gunung' => $request->id_gunung,
-            'province_id' => $request->province_id,
-            'regency_id' => $request->regency_id,
-            'district_id' => $request->district_id, // Fix typo here
-            'village_id' => $request->village_id,
-            'jarak' => $request->jarak,
-            'deskripsi' => $request->deskripsi,
-            'map_basecamp' => $request->map_basecamp,
-            'biaya' => $request->biaya,
-        ]);
+    // Ambil data jalur berdasarkan ID
+    $updateJalur = Jalur::findOrFail($id);
 
-        return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate!');
+    // Cek apakah ada file gambar yang diunggah
+    if ($request->hasFile('gambar_jalur')) {
+        // Hapus gambar lama jika ada
+        if ($updateJalur->gambar_jalur) {
+            Storage::disk('public')->delete($updateJalur->gambar_jalur);
+        }
+
+        // Simpan gambar baru
+        $gambarPath = $request->file('gambar_jalur')->store('jalur', 'public');
+        $validatedData['gambar_jalur'] = $gambarPath;
+    }
+
+    // Update data jalur dengan data yang sudah divalidasi
+    $updateJalur->update($validatedData);
+
+    // Redirect dengan pesan sukses
+    return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate!');
     }
 
     public function destroy($id)

@@ -34,6 +34,7 @@
                     <th scope="col" class="text-center">Jarak</th>
                     <th scope="col" class="text-center">Deskripsi</th>
                     <th scope="col" class="text-center">Map Basecamp</th>
+                    <th scope="col" class="text-center">Gambar</th>
                     <th scope="col" class="text-center">Biaya</th>
                     <th scope="col" class="text-center" style="width: 13%">Aksi</th>
                 </tr>
@@ -51,6 +52,13 @@
                     <td>{{ $j->jarak }} km</td>
                     <td>{{ $j->deskripsi }}</td>
                     <td>{{ $j->map_basecamp }}</td>
+                    <td class="text-center">
+                        @if ($j->gambar_jalur)
+                            <img src="{{ asset('storage/' . $j->gambar_jalur) }}" alt="Gambar Jalur" style="width: 100px; height: auto;">
+                        @else
+                            Tidak Ada Gambar
+                        @endif
+                    </td>
                     <td>Rp {{ number_format($j->biaya, 0, ',', '.') }}</td>
                     <td class="text-center">
                         <form onsubmit="return confirm('Yakin ingin menghapus jalur ini?');" action="{{ route('jalur.destroy', $j->id) }}" method="POST">

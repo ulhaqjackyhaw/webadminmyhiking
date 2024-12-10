@@ -136,6 +136,11 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="gambar_jalur">Upload Gambar Jalur</label>
+                            <input type="file" class="form-control" id="gambar_jalur" name="gambar_jalur">
+                        </div>
+
                         <div class="form-group mb-3">
                             <label class="font-weight-bold">Biaya</label>
                             <input type="text" name="biaya" class="form-control @error('biaya') is-invalid @enderror" value="{{ old('biaya') }}" placeholder="Masukkan Biaya Pendakian">

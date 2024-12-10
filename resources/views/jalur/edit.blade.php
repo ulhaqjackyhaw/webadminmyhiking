@@ -151,6 +151,16 @@
                             @enderror
                         </div>
 
+                        <div class="form-group">
+                            <label for="gambar_jalur">Upload Gambar Jalur</label>
+                            <input type="file" class="form-control @error('gambar_jalur') is-invalid @enderror" id="gambar_jalur" name="gambar_jalur" >
+                            @error('gambar_jalur')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
                         <!-- Input Biaya -->
                         <div class="form-group mb-3">
                             <label class="font-weight-bold">Biaya</label>
