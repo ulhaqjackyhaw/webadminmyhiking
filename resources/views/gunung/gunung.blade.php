@@ -58,7 +58,7 @@
                                     <td>{{ $gunung->village_id }}</td>
                                     <td>{{ $gunung->ketinggian }} mdpl</td>
                                     <td>
-                                        <img src="{{ asset('storage/' . $gunung->gambar) }}" alt="{{ $gunung->nama }}" width="80">
+                                        <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" alt="{{ $gunung->nama }}" width="80">
                                     </td>
                                     <td>
                                         <a href="{{ route('gunung.edit', $gunung) }}" class="btn btn-warning btn-sm">Edit</a>

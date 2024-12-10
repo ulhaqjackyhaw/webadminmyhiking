@@ -46,8 +46,8 @@
                                 <td>{{ $gunung->village->name ?? 'Tidak Diketahui' }}</td> <!-- Menampilkan Nama Desa -->
                                 <td>{{ $gunung->ketinggian ?? 'Tidak Diketahui' }} mdpl</td>
                                 <td class="text-center">
-                                    @if ($gunung->gambar)
-                                    <img src="{{ asset('storage/' . $gunung->gambar) }}" class="rounded" style="width: 150px">
+                                    @if ($gunung->gambar_gunung)
+                                    <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 150px">
                                     @else
                                         <span>Tidak Ada Gambar</span>
                                     @endif

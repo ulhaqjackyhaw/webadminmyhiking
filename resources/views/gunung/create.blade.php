@@ -112,9 +112,9 @@
 
                         <div class="form-group mb-3">
                             <label class="font-weight-bold">Gambar</label>
-                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar">
+                            <input type="file" class="form-control @error('gambar_gunung') is-invalid @enderror" name="gambar_gunung">
                             
-                            @error('gambar')
+                            @error('gambar_gunung')
                                 <div class="alert alert-danger mt-2">
                                     {{ $message }}
                                 </div>

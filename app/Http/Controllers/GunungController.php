@@ -52,13 +52,12 @@ class GunungController extends Controller
             'village_id' => 'required|integer|exists:reg_villages,id',
             'ketinggian' => 'required|numeric|min:0',
             'deskripsi' => 'nullable|string|max:1000',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar_gunung' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Upload gambar jika ada
-        $imagePath = null;
-        if ($request->hasFile('gambar')) {
-            $imagePath = $request->file('gambar')->store('gunung', 'public');
+        if ($request->hasFile('gambar_gunung')) {
+            $gambarPath = $request->file('gambar_gunung')->store('gunung', 'public');
         }
 
         // Simpan data ke database
@@ -70,7 +69,7 @@ class GunungController extends Controller
             'village_id' => $request->village_id,
             'ketinggian' => $request->ketinggian,
             'deskripsi' => $request->deskripsi,
-            'gambar' => $imagePath,
+            'gambar_gunung' => $gambarPath,
         ]);
 
         // Redirect dengan pesan sukses
@@ -111,24 +110,24 @@ public function update(Request $request, $id)
         'village_id' => 'required|integer|exists:reg_villages,id',
         'ketinggian' => 'required|numeric|min:0',
         'deskripsi' => 'nullable|string|max:1000',
-        'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'gambar_gunung' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     // Temukan gunung berdasarkan ID
     $gunung = Gunung::findOrFail($id);
 
     // Upload gambar jika ada
-    if ($request->hasFile('gambar')) {
+    if ($request->hasFile('gambar_gunung')) {
         // Hapus gambar lama jika ada
-        if ($gunung->gambar) {
-            \Storage::disk('public')->delete($gunung->gambar);
+        if ($gunung->gambar_gunung) {
+            \Storage::disk('public')->delete($gunung->gambar_gunung);
         }
 
         // Upload gambar baru
-        $imagePath = $request->file('gambar')->store('gunung', 'public');
+        $gambarPath = $request->file('gambar_gunung')->store('gunung', 'public');
     } else {
         // Jika tidak ada gambar yang diupload, gunakan gambar lama
-        $imagePath = $gunung->gambar;
+        $gambarPath = $gunung->gambar_gunung;
     }
 
     // Update data gunung
@@ -140,7 +139,7 @@ public function update(Request $request, $id)
         'village_id' => $request->village_id,
         'ketinggian' => $request->ketinggian,
         'deskripsi' => $request->deskripsi,
-        'gambar' => $imagePath,
+        'gambar_gunung' => $gambarPath,
     ]);
 
     // Redirect dengan pesan sukses
@@ -153,8 +152,8 @@ public function update(Request $request, $id)
     $gunung = Gunung::findOrFail($id);
 
     // Hapus gambar jika ada
-    if ($gunung->gambar) {
-        \Storage::disk('public')->delete($gunung->gambar);
+    if ($gunung->gambar_gunung) {
+        \Storage::disk('public')->delete($gunung->gambar_gunung);
     }
 
     // Hapus data gunung

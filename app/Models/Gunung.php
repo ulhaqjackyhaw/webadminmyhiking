@@ -18,7 +18,7 @@ class Gunung extends Model
         'village_id',
         'ketinggian',
         'deskripsi',
-        'gambar',
+        'gambar_gunung',
     ];
 
     // Relasi many-to-many dengan Jalur melalui tabel pivot gunung_jalur

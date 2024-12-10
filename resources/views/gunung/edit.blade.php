@@ -113,10 +113,10 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label for="gambar" class="font-weight-bold">Gambar</label>
-                            <input type="file" name="gambar" class="form-control" id="gambar">
+                            <label for="gambar_gunung" class="font-weight-bold">Gambar</label>
+                            <input type="file" name="gambar_gunung" class="form-control" id="gambar_gunung">
                             @if (!empty($gunung->gambar))
-                                <img src="{{ asset('storage/' . $gunung->gambar) }}" alt="Gambar Gunung" class="img-thumbnail mt-2" width="200">
+                                <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" alt="Gambar Gunung" class="img-thumbnail mt-2" width="200">
                             @endif
                         </div>
 

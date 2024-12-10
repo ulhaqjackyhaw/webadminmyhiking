@@ -14,8 +14,8 @@
                             <div class="col-md-4">
                                 <div class="card border-0 shadow-sm rounded">
                                     <div class="card-body">
-                                        @if ($gunung->gambar)
-                                        <img src="{{ asset('storage/' . $gunung->gambar) }}" class="rounded" style="width: 100%">
+                                        @if ($gunung->gambar_gunung)
+                                        <img src="{{ asset('storage/' . $gunung->gambar_gunung) }}" class="rounded" style="width: 100%">
                                         @else
                                         <p><strong>Tidak ada gambar</strong></p>
                                         @endif
