@@ -13,7 +13,7 @@
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
                     <h1 class="text-start my-4" style="font-weight: bold; color: black;">Edit Jalur</h1>
-                    <form action="{{ route('jalur.update', $jalur->id) }}" method="POST">
+                    <form action="{{ route('jalur.update', $jalur->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 

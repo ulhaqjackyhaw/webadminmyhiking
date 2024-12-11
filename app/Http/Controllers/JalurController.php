@@ -106,42 +106,50 @@ class JalurController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-    // Validasi data input
-    $validatedData = $request->validate([
+{
+    $request->validate([
         'nama' => 'required|string|max:255',
         'province_id' => 'required|integer|exists:reg_provinces,id',
         'regency_id' => 'required|integer|exists:reg_regencies,id',
         'district_id' => 'required|integer|exists:reg_districts,id',
         'village_id' => 'required|integer|exists:reg_villages,id',
         'jarak' => 'required|numeric|min:0',
-        'deskripsi' => 'nullable|string',
+        'deskripsi' => 'nullable|string|max:1000',
         'map_basecamp' => 'nullable|string|max:255',
         'gambar_jalur' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'biaya' => 'required|integer|min:0',
+        'biaya' => 'required|numeric|min:0',
     ]);
 
-    // Ambil data jalur berdasarkan ID
-    $updateJalur = Jalur::findOrFail($id);
+    $jalur = Jalur::findOrFail($id);
 
-    // Cek apakah ada file gambar yang diunggah
+    // Check if a new image file is uploaded
     if ($request->hasFile('gambar_jalur')) {
-        // Hapus gambar lama jika ada
-        if ($updateJalur->gambar_jalur) {
-            Storage::disk('public')->delete($updateJalur->gambar_jalur);
+        // Delete old image if it exists
+        if ($jalur->gambar_jalur && \Storage::disk('public')->exists($jalur->gambar_jalur)) {
+            \Storage::disk('public')->delete($jalur->gambar_jalur);
         }
 
-        // Simpan gambar baru
+        // Store the new image
         $gambarPath = $request->file('gambar_jalur')->store('jalur', 'public');
-        $validatedData['gambar_jalur'] = $gambarPath;
+        $jalur->gambar_jalur = $gambarPath;
     }
 
-    // Update data jalur dengan data yang sudah divalidasi
-    $updateJalur->update($validatedData);
+    // Update other fields
+    $jalur->nama = $request->nama;
+    $jalur->province_id = $request->province_id;
+    $jalur->regency_id = $request->regency_id;
+    $jalur->district_id = $request->district_id;
+    $jalur->village_id = $request->village_id;
+    $jalur->jarak = $request->jarak;
+    $jalur->deskripsi = $request->deskripsi;
+    $jalur->map_basecamp = $request->map_basecamp;
+    $jalur->biaya = $request->biaya;
 
-    // Redirect dengan pesan sukses
-    return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diupdate!');
-    }
+    $jalur->save();
+
+    return redirect()->route('jalur.index')->with('success', 'Jalur berhasil diperbarui!');
+}
+
 
     public function destroy($id)
     {
