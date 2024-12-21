@@ -48,4 +48,8 @@ class Jalur extends Model
     {
         return $this->belongsTo(Village::class, 'village_id');
     }
+    public function pesanan()
+    {
+        return $this->hasMany(Pesanan::class, 'id_jalur', 'id')->distinct();
+    }
 }

@@ -76,5 +76,9 @@ class User extends Authenticatable
 
         return $id;
     }
+    public function anggotaPesanan()
+    {
+        return $this->hasMany(AnggotaPesanan::class, 'id_users', 'id');
+    }
 
 }

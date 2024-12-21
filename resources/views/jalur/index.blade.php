@@ -61,13 +61,18 @@
                     </td>
                     <td>Rp {{ number_format($j->biaya, 0, ',', '.') }}</td>
                     <td class="text-center">
-                        <form onsubmit="return confirm('Yakin ingin menghapus jalur ini?');" action="{{ route('jalur.destroy', $j->id) }}" method="POST">
-                            <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm" style="background-color: #28a745; color: white;">EDIT</a>
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                        </form>
-                    </td>
+    <div class="d-flex justify-content-between">
+        <!-- Tombol Edit -->
+        <a href="{{ route('jalur.edit', $j->id) }}" class="btn btn-sm" style="background-color: #28a745; color: white; margin-right: 5px;">EDIT</a>
+        
+        <!-- Tombol Hapus -->
+        <form onsubmit="return confirm('Yakin ingin menghapus jalur ini?');" action="{{ route('jalur.destroy', $j->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" style="margin-left: 5px;">HAPUS</button>
+        </form>
+    </div>
+</td>
                 </tr>
                 @endforeach
             </tbody>

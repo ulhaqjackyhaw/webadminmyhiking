@@ -25,7 +25,7 @@
         <table class="table table-bordered">
             <thead style="background-color: #d4edda;"> <!-- Header tabel -->
                 <tr>
-                    <th class="text-center">ID</th>
+                    <th class="text-center">ID User</th>
                     <th class="text-center">Nama</th>
                     <th class="text-center">Email</th>
                     <th class="text-center" style="width: 20%;">Aksi</th> <!-- Kolom aksi -->

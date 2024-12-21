@@ -9,31 +9,60 @@
 </head>
 <body style="background: #117958">
     <div class="container bg-white p-4 rounded">
-        <h1 class="text-center my-4" style="font-weight: bold; color: black;">Detail Riwayat</h1>
-        
+        <h1 class="text-center my-4" style="font-weight: bold; color: black;">Detail Pesanan</h1>
+
         <!-- Detail Pesanan -->
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-1 shadow-sm rounded">
+                <!-- <div class="card border-1 shadow-sm rounded"> -->
                     <div class="card-body">
-                        <h3>Pesanan #{{ $pesanan->id }}</h3>
-                        <hr/>
-                        <p><strong>ID User:</strong> {{ $pesanan->anggotaPesanan->id_users ?? 'Tidak Diketahui' }}</p>
-                        <p><strong>ID Gunung:</strong> {{ $pesanan->id_gunung }}</p>
-                        <p><strong>ID Jalur:</strong> {{ $pesanan->id_jalur }}</p>
-                        <p><strong>Tanggal Naik:</strong> {{ $pesanan->tanggal_naik->format('d M Y') }}</p>
-                        <p><strong>Tanggal Turun:</strong> {{ $pesanan->tanggal_turun->format('d M Y') }}</p>
-                        <p><strong>Total Harga Tiket:</strong> Rp {{ number_format($pesanan->total_harga_tiket, 0, ',', '.') }}</p>
-                        <p><strong>Status:</strong>
-                            @if($pesanan->status == 'Booking')
-                                <span style="font-weight: bold; color: orange;">Booking</span>
-                            @elseif($pesanan->status == 'Sedang Mendaki')
-                                <span style="font-weight: bold; color: green;">Mendaki</span>
-                            @elseif($pesanan->status == 'Selesai')
-                                <span style="font-weight: bold; color: black;">Selesai</span>
-                            @endif
-                        </p>
+                        <!-- Pesanan ID di tengah -->
+                        <h3 class="text-left mb-4">Pesanan #{{ $pesanan->id }}</h3>
                         
+                        <!-- Tabel berada di tengah dengan mx-auto -->
+                        <table class="table table-bordered mx-auto">
+                            <tr>
+                                <th>Pendaki</th>
+                                <td>
+                                    @foreach ($pesanan->anggotaPesanan as $anggota)
+                                        <li>{{ $anggota->user->name ?? 'Tidak Diketahui' }}</li>
+                                    @endforeach
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Gunung</th>
+                                <td>{{ $pesanan->gunung->nama ?? 'Tidak Diketahui' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Jalur</th>
+                                <td>{{ $pesanan->jalur->nama ?? 'Tidak Diketahui' }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Naik</th>
+                                <td>{{ $pesanan->tanggal_naik->format('d M Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Tanggal Turun</th>
+                                <td>{{ $pesanan->tanggal_turun->format('d M Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Total Harga Tiket</th>
+                                <td>Rp {{ number_format($pesanan->total_harga_tiket, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    @if($pesanan->status == 'Booking')
+                                        <span style="font-weight: bold; color: orange;">Booking</span>
+                                    @elseif($pesanan->status == 'Sedang Mendaki')
+                                        <span style="font-weight: bold; color: green;">Mendaki</span>
+                                    @elseif($pesanan->status == 'Selesai')
+                                        <span style="font-weight: bold; color: black;">Selesai</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+
                         <!-- Tombol Ganti Status (Tombol hanya muncul jika status bukan Selesai) -->
                         @if($pesanan->status != 'Selesai')
                         <form action="{{ route('riwayat.updateStatus', $pesanan->id) }}" method="POST">
@@ -47,8 +76,8 @@
                                 @elseif($pesanan->status == 'Sedang Mendaki')
                                     <button type="submit" name="status" value="Selesai" class="btn" style="background-color: orange; color: white;">Ganti ke Selesai</button>
                                 @endif
-                            </div>
-                        </form>
+                            <a href="{{ route('riwayat.index') }}" class="btn" style="background-color: #117958; color: white; border: none; margin-top: 20px;">Kembali ke Daftar Riwayat</a>
+           </form>
                         @endif
                     </div>
                 </div>
@@ -56,8 +85,7 @@
         </div>
 
         <!-- Tombol Kembali ke Daftar Riwayat dengan jarak -->
-        <a href="{{ route('riwayat.index') }}" class="btn" style="background-color: #117958; color: white; border: none; margin-top: 20px;">Kembali ke Daftar Riwayat</a>
-    </div>
+        
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

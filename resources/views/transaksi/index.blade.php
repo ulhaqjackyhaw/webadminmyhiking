@@ -22,7 +22,7 @@
         <table class="table table-bordered">
             <thead style="background-color: #d4edda;"> <!-- Header tabel -->
                 <tr>
-                    <th class="text-center">ID</th>
+                    <th class="text-center">No</th>
                     <th class="text-center">ID Pesanan</th>
                     <th class="text-center">Metode Pembayaran</th>
                     <th class="text-center">Total Bayar</th>

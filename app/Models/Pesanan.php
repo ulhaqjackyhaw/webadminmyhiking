@@ -40,7 +40,7 @@ class Pesanan extends Model
      */
     public function gunung()
     {
-        return $this->belongsTo(Gunung::class, 'id_gunung', 'id');
+        return $this->belongsTo(Gunung::class, 'id_gunung', 'id', 'nama');
     }
 
     /**
@@ -48,7 +48,7 @@ class Pesanan extends Model
      */
     public function jalur()
     {
-        return $this->belongsTo(Jalur::class, 'id_jalur', 'id');
+        return $this->belongsTo(Jalur::class, 'id_jalur', 'id', 'nama');
     }
 
     /**
@@ -56,8 +56,9 @@ class Pesanan extends Model
      */
     public function anggotaPesanan()
     {
-        return $this->belongsTo(AnggotaPesanan::class, 'id_anggota_pesanan', 'id');
+        return $this->hasMany(AnggotaPesanan::class, 'id_pesanan', 'id');
     }
+
 
     /**
      * Mendapatkan status pesanan dengan label yang lebih mudah dimengerti
