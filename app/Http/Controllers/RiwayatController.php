@@ -10,8 +10,8 @@ class RiwayatController extends Controller
     // Menampilkan daftar riwayat pesanan
     public function index(Request $request)
 {
-    $query = Pesanan::with(['anggotaPesanan.user']) // Relasi anggota ke user
-        ->select('id', 'tanggal_naik', 'tanggal_turun', 'status');
+    $query = Pesanan::with(['user:id,name', 'anggotaPesanan.user']) // Memuat relasi user dan anggotaPesanan
+        ->select('id', 'tanggal_naik', 'tanggal_turun', 'status', 'id_users'); // Menambahkan 'id_user' dalam query
 
     // Filter berdasarkan ID pesanan
     if ($request->filled('search')) {
@@ -31,12 +31,13 @@ class RiwayatController extends Controller
 
     // Menampilkan detail pesanan dan anggota pesanan
     public function show($id)
-    {
-        $pesanan = Pesanan::with(['gunung:id,nama', 'jalur:id,nama', 'anggotaPesanan.user']) // Relasi untuk mendapatkan nama gunung
-            ->findOrFail($id);
+{
+    $pesanan = Pesanan::with(['gunung:id,nama', 'jalur:id,nama', 'anggotaPesanan.user', 'user:id,name']) // Memuat relasi user
+        ->findOrFail($id);
 
-        return view('riwayat.show', compact('pesanan'));
-    }
+    return view('riwayat.show', compact('pesanan'));
+}
+
 
     // Mengupdate status pesanan
     public function updateStatus(Request $request, $id)

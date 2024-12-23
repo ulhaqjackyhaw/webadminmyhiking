@@ -56,10 +56,14 @@ class Pesanan extends Model
      */
     public function anggotaPesanan()
     {
-        return $this->hasMany(AnggotaPesanan::class, 'id_pesanan', 'id');
+        return $this->hasMany(AnggotaPesanan::class, 'id_pesanan');
     }
 
-
+    // Relasi Pesanan ke User (Pemesan)
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_users', 'id', 'name');
+    }
     /**
      * Mendapatkan status pesanan dengan label yang lebih mudah dimengerti
      */

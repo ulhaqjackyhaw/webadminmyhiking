@@ -31,46 +31,43 @@
         @endif
 
         <!-- Tabel Riwayat Pesanan -->
-        <table class="table table-bordered">
-            <thead style="background-color: #d4edda;">
-                <tr>
-                    <th class="text-center">ID Pesanan</th>
-                    <th class="text-center">Anggota</th>
-                    <th class="text-center">Tanggal Naik</th>
-                    <th class="text-center">Tanggal Turun</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center" style="width: 15%">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($pesanan as $p)
-                <tr>
-                    <td class="text-center">{{ $p->id }}</td>
-                    <td class="text-center">
-                        <ul style="list-style: none; padding-left: 0;">
-                            @foreach ($p->anggotaPesanan as $anggota)
-                                <li>{{ $anggota->user->name ?? 'Tidak Diketahui' }}</li>
-                            @endforeach
-                        </ul>
-                    </td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($p->tanggal_naik)->format('d M Y') }}</td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($p->tanggal_turun)->format('d M Y') }}</td>
-                    <td class="text-center">
-                        @if ($p->status == 'Booking')
-                            <span style="font-weight: bold; color: orange;">Booking</span>
-                        @elseif ($p->status == 'Sedang Mendaki')
-                            <span style="font-weight: bold; color: green;">Mendaki</span>
-                        @elseif ($p->status == 'Selesai')
-                            <span style="font-weight: bold; color: black;">Selesai</span>
-                        @endif
-                    </td>
-                    <td class="text-center">
-                        <a href="{{ route('riwayat.show', $p->id) }}" class="btn btn-sm btn-info">DETAIL</a>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+<table class="table table-bordered">
+    <thead style="background-color: #d4edda;">
+        <tr>
+            <th class="text-center">ID Pesanan</th>
+            <th class="text-center">Ketua</th>
+            <th class="text-center">Tanggal Naik</th>
+            <th class="text-center">Tanggal Turun</th>
+            <th class="text-center">Status</th>
+            <th class="text-center" style="width: 15%">Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach ($pesanan as $p)
+        <tr>
+            <td class="text-center">{{ $p->id }}</td>
+                <td class="text-center">
+        {{ $p->user ? $p->user->name : 'Tidak Diketahui' }} <!-- Menambahkan pengecekan null -->
+    </td>
+            <td class="text-center">{{ \Carbon\Carbon::parse($p->tanggal_naik)->format('d M Y') }}</td>
+            <td class="text-center">{{ \Carbon\Carbon::parse($p->tanggal_turun)->format('d M Y') }}</td>
+            <td class="text-center">
+                @if ($p->status == 'Booking')
+                    <span style="font-weight: bold; color: orange;">Booking</span>
+                @elseif ($p->status == 'Sedang Mendaki')
+                    <span style="font-weight: bold; color: green;">Mendaki</span>
+                @elseif ($p->status == 'Selesai')
+                    <span style="font-weight: bold; color: black;">Selesai</span>
+                @endif
+            </td>
+            <td class="text-center">
+                <a href="{{ route('riwayat.show', $p->id) }}" class="btn btn-sm btn-info">DETAIL</a>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
     </div>
 </body>
 
