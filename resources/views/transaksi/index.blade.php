@@ -39,7 +39,7 @@
                     <td class="text-center">{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</td>
                     <td class="text-center">
                         <!-- Status Pesanan -->
-                        @if ($transaksi->status_pesanan === 'unverified')
+                        @if ($transaksi->status_pesanan === 'Unverified')
                             <span class="text-danger">Unverified</span>
                         @else
                             <span class="text-success">Verified</span>
@@ -50,7 +50,7 @@
                         <a href="{{ route('transaksi.show', $transaksi->id) }}" class="btn btn-sm btn-dark">LIHAT DETAIL</a>
                         
                         <!-- Tombol Verifikasi -->
-                        @if ($transaksi->status_pesanan === 'unverified') <!-- Menampilkan tombol verifikasi jika status 'unverified' -->
+                        @if ($transaksi->status_pesanan === 'Unverified') <!-- Menampilkan tombol verifikasi jika status 'unverified' -->
                             <form action="{{ route('transaksi.verify', $transaksi->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 <button type="submit" class="btn btn-sm" style="background-color: #117958; color: white; border: none;">VERIFIKASI</button>

@@ -31,8 +31,8 @@ class TransaksiController extends Controller
             $transaksi = Transaksi::findOrFail($id);
             
             // Periksa apakah status pesanan adalah 'unverified'
-            if ($transaksi->status_pesanan === 'unverified') {
-                $transaksi->status_pesanan = 'verified';  // Ubah status menjadi 'verified'
+            if ($transaksi->status_pesanan === 'Unverified') {
+                $transaksi->status_pesanan = 'Verified';  // Ubah status menjadi 'verified'
                 $transaksi->save();
             }
 
@@ -46,7 +46,7 @@ class TransaksiController extends Controller
         $transaksi->id_pesanan = $request->id_pesanan;
         $transaksi->metode_pembayaran = $request->metode_pembayaran;
         $transaksi->total_bayar = $request->total_bayar;
-        $transaksi->status_pesanan = 'unverified';  // Status default untuk transaksi baru
+        $transaksi->status_pesanan = 'Unverified';  // Status default untuk transaksi baru
     
         // Debugging
         dd($transaksi); // Cek apakah status pesanan benar-benar 'unverified'

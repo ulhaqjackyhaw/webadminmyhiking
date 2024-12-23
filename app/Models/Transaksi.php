@@ -21,7 +21,7 @@ class Transaksi extends Model
         'bukti',
     ];
         protected $attributes = [
-            'status_pesanan' => 'unverified',  // Pastikan ini ada
+            'status_pesanan' => 'Unverified',  // Pastikan ini ada
         ];
 
     /**
