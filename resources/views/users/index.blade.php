@@ -39,7 +39,7 @@
                     <td class="text-center">{{ $user->email }}</td>
                     <td class="text-center">
                         <!-- Tombol Detail -->
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-dark">LIHAT DETAIL</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-dark">DETAIL</a>
                     </td>
                 </tr>
                 @endforeach

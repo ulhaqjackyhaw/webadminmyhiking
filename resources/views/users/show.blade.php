@@ -3,6 +3,9 @@
 @section('content')
 <div class="container bg-white p-4 rounded">
     <h1 class="text-center mb-4" style="font-weight: bold; color: black;">Detail Pengguna</h1>
+    <body style="background: #117958">
+    <div class="container bg-white p-4 rounded position-relative">
+
     <table class="table table-bordered">
         <tr>
             <th style="width: 30%;">ID</th>
